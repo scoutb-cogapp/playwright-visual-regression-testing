@@ -1,5 +1,6 @@
 // @ts-check
 const { defineConfig } = require('@playwright/test');
+require('dotenv').config();
 
 /**
  * Visual regression config.
@@ -28,6 +29,11 @@ module.exports = defineConfig({
 
   use: {
     baseURL: process.env.BASE_URL,
+
+    // HTTP Basic Auth credentials for password-shielded environments.
+    ...(process.env.HTTP_USER && process.env.HTTP_PASS
+      ? { httpCredentials: { username: process.env.HTTP_USER, password: process.env.HTTP_PASS } }
+      : {}),
 
     // Collect trace on first retry to aid debugging
     trace: 'on-first-retry',
