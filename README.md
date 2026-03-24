@@ -1,7 +1,5 @@
 # Visual Regression Tests to use as a base for other projects
 
-first used for VCS, then also Hammer
-
 Compares screenshots between two environments to catch visual changes.
 
 ## Set up
