@@ -6,7 +6,7 @@ const viewports = require('./viewports');
 
 /**
  * Pages that contain an embedded iframe (e.g. a YouTube player).
- * The helper will wait for the iframe element to become visible on these.
+ * The helper will wait for the iframe element to become visible.
  */
 const IFRAME_SLUGS = new Set(['/whore-babylon']);
 
@@ -24,7 +24,7 @@ for (const { name, slug } of pages) {
 
       // ── 2. Navigate ───────────────────────────────────────────────────────
       await page.goto(slug, {
-        // 'load' fires after all synchronous resources (HTML, CSS, synchronous
+        // 'load' only fires after all synchronous resources (HTML, CSS, synchronous
         // JS) are done.  Our helper waits for fonts + images on top of this.
         waitUntil: 'load',
       });
@@ -34,17 +34,11 @@ for (const { name, slug } of pages) {
 
       // ── 4. Full-page screenshot + diff ───────────────────────────────────
       //
-      // The snapshot name is stable (no URL in it) so that both runs — the
-      // golden capture against the live site and the comparison run against
-      // the new environment — look up the same file on disk.
-      //
-      // On the FIRST run (with --update-snapshots) Playwright writes the file.
-      // On subsequent runs it diffs the new screenshot against the saved one.
       await expect(page).toHaveScreenshot(snapshotName, {
         fullPage: true,
 
-        // Belt-and-suspenders: also instruct the screenshot engine to skip
-        // any animations that managed to survive our CSS injection.
+        // Instruct the screenshot engine to skip any animations
+        // that managed to survive our CSS injection.
         animations: 'disabled',
       });
     });

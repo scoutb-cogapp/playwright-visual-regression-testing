@@ -23,6 +23,10 @@ Pages with a YouTube iframe also need their slug added to `IFRAME_SLUGS` in `tes
 
 The screen sizes to test are defined in `tests/visual/pages.js`. 
 
+### Adjust helpers
+The helpers.js file contains a number of functions that are meant to put the page into the right state before taking a screenshot (eg freeze animations, wait for iframes). Not all of them may be needed for every site. Some of them may need to be adjusted.
+
+
 ## Running the tests
 
 ### 1. Capture baseline screenshots from the baseline site:
